@@ -2,25 +2,43 @@
 #include <windows.h>
 #include <stdio.h>
 #include <iostream> 
+#include "resource.h"
 using namespace std;
 
 #define HOOK_LEN 5
 
 BYTE backupCode[HOOK_LEN] { 0 };
-
+HWND hDlg;
 VOID MsgForward(DWORD msg)
 {
-    msg = *((DWORD*)*((DWORD*)msg));
+    try {
+        msg = *((DWORD*)msg);
 
-    LPVOID msgFrom = (LPVOID)(msg + 0x48);
-    LPVOID msgContent = (LPVOID)(msg + 0x70);
-    if (msgContent == NULL) msgContent = msgFrom;
-    LPVOID msgFrom2 = (LPVOID)(msg + 0x170);
-    LPVOID msgKey = (LPVOID)(msg + 0x184);
-
-    MessageBox(NULL, *(LPCWSTR*)msgFrom, L"来源", 0);
-    MessageBox(NULL, *(LPCWSTR*)msgContent, L"内容", 0);
-    MessageBox(NULL, *(LPCWSTR*)msgFrom2, L"来源2", 0);
+        LPVOID msgFrom = (LPVOID)(msg + 0x48);
+        LPVOID msgContent;
+        LPVOID msgKey;
+        LPVOID msgFrom2;
+        /*if (*(LPCWSTR*)msgFrom == NULL) {
+            msgFrom = (LPVOID)(msg - 0x240);
+            msgContent = (LPVOID)(msg - 0x218);
+            if (msgContent == NULL) msgContent = msgFrom;
+            msgKey = (LPVOID)(msg - 0x104);
+            msgFrom2 = msgFrom;
+         }
+        else {*/
+            msgContent = (LPVOID)(msg + 0x70);
+            if (msgContent == NULL) msgContent = msgFrom;
+            msgFrom2 = (LPVOID)(msg + 0x170);
+            msgKey = (LPVOID)(msg + 0x184);
+        //}
+        SetDlgItemText(hDlg, FROM, *(LPCWSTR*)msgFrom);
+        SetDlgItemText(hDlg, CONTENT, *(LPCWSTR*)msgContent);
+        SetDlgItemText(hDlg, SENDER, *(LPCWSTR*)msgFrom2);
+        SetDlgItemText(hDlg, KEY, *(LPCWSTR*)msgKey);
+    }
+    catch (const std::exception&) {
+        SetDlgItemText(hDlg, CONTENT, L"发生错误");
+    }
 }
 
 
@@ -52,7 +70,7 @@ VOID __declspec(naked) MsgProcess()
         mov cEdi, edi
     }
 
-    MsgForward(cEsp);
+    MsgForward(cEbx);
 
     retCallAdd = GetWechatWinAdd() + 0x37CD18;
 
@@ -74,8 +92,9 @@ VOID __declspec(naked) MsgProcess()
     }
 }
 
-VOID HookMessageCall(DWORD offset, LPVOID func)
+VOID HookMessageCall(HWND _hDlg, DWORD offset, LPVOID func)
 {
+    hDlg = _hDlg;
     //0x37CD13
     DWORD hookPoint = GetWechatWinAdd() + offset;
     BYTE jmpCode[HOOK_LEN] = { 0 };

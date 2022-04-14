@@ -13,9 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="源文件\json">
+      <UniqueIdentifier>{a688cbed-0cc1-45b6-84f3-fa65f74c83be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="json\json_cpp\json_valueiterator.inl">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -30,6 +36,42 @@
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="socketHelper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="json\json_cpp\json_tool.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="json\include\json\allocator.h">
+      <Filter>源文件\json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\include\json\assertions.h">
+      <Filter>源文件\json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\include\json\config.h">
+      <Filter>源文件\json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\include\json\forwards.h">
+      <Filter>源文件\json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\include\json\json.h">
+      <Filter>源文件\json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\include\json\json_features.h">
+      <Filter>源文件\json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\include\json\reader.h">
+      <Filter>源文件\json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\include\json\value.h">
+      <Filter>源文件\json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\include\json\version.h">
+      <Filter>源文件\json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\include\json\writer.h">
+      <Filter>源文件\json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WeChatHook.cpp">
@@ -41,10 +83,28 @@
     <ClCompile Include="pch.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="socketHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="json\json_cpp\json_reader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="json\json_cpp\json_value.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="json\json_cpp\json_writer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WeChatHook.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
+    <Text Include="json\json_cpp\CMakeLists.txt">
+      <Filter>源文件</Filter>
+    </Text>
   </ItemGroup>
 </Project>

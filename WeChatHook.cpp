@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <iostream> 
 #include "resource.h"
+#include "socketHelper.h"
+#include "json/json.h"
+#include <atlconv.h>
+#include <atlstr.h>
 using namespace std;
 
 #define HOOK_LEN 5
@@ -35,6 +39,14 @@ VOID MsgForward(DWORD msg)
         SetDlgItemText(hDlg, CONTENT, *(LPCWSTR*)msgContent);
         SetDlgItemText(hDlg, SENDER, *(LPCWSTR*)msgFrom2);
         SetDlgItemText(hDlg, KEY, *(LPCWSTR*)msgKey);
+        Json::Value content;
+        CString strFrom(*(LPCWSTR*)msgFrom);
+        CString strContent(*(LPCWSTR*)msgContent);
+        Socket_sendstr((char*)(LPCWSTR)msgContent);
+        return;
+        content["from"] = (char*)strFrom.GetBuffer();
+        content["content"] = (char*)strContent.GetBuffer();
+        if(!Socket_send(content)) MessageBox(NULL, L"发送失败", L"错误", 0);;
     }
     catch (const std::exception&) {
         SetDlgItemText(hDlg, CONTENT, L"发生错误");

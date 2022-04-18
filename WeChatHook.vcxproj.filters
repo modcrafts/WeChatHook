@@ -36,9 +36,6 @@
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="socketHelper.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="json\json_cpp\json_tool.h">
       <Filter>源文件</Filter>
     </ClInclude>
@@ -81,9 +78,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="socketHelper.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="json\json_cpp\json_reader.cpp">

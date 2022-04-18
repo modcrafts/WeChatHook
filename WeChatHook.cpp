@@ -139,7 +139,7 @@ VOID SendCallbackMsg(LPVOID msg) {// 接收消息进程名
             CopyData.cbData = strlen(s) + 1;
             CopyData.lpData = s;
             SendMessage(hOtherWnd, WM_COPYDATA, (WPARAM)GetCurrentProcess(), (LPARAM)&CopyData);
-            delete s;
+            delete [] s;
         }
         else {
             MessageBox(NULL, L"句柄无效,请确认主程序是否启动\n监听模块将自动卸载", L"错误", 0);

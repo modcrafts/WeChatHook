@@ -9,8 +9,9 @@
 #include <string>
 #include <iostream>
 
-#define offset 0x37CD13
+#define offset 0x4C4F60
 using namespace std;
+
 
 VOID Hook(HMODULE hModule);
 INT_PTR CALLBACK DialogProc(_In_ HWND   hwndDlg, _In_ UINT   uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam);

@@ -70,6 +70,7 @@ DWORD cEbp = 0;
 DWORD cEsi = 0;
 DWORD cEdi = 0;
 DWORD retCallAdd = 0;
+DWORD retCallAddNext = 0;
 VOID __declspec(naked) MsgProcess()
 {
     __asm {
@@ -83,9 +84,10 @@ VOID __declspec(naked) MsgProcess()
         mov cEdi, edi
     }
 
-    MsgForward(cEbx);
+    MsgForward(cEax);
 
-    retCallAdd = GetWechatWinAdd() + 0x37CD18;
+    retCallAddNext = GetWechatWinAdd() + 0x4C4F65;
+    retCallAdd = GetWechatWinAdd() + 0x4C0CE0;
 
     __asm {
         mov  eax, cEax
@@ -99,9 +101,8 @@ VOID __declspec(naked) MsgProcess()
     }
 
     __asm {
-        call eax
-        lea ecx, dword ptr ss : [ebp - 0x18]
-        jmp retCallAdd
+        call retCallAdd
+        jmp retCallAddNext
     }
 }
 
@@ -142,12 +143,12 @@ VOID SendCallbackMsg(LPVOID msg) {// 接收消息进程名
             delete [] s;
         }
         else {
-            MessageBox(NULL, L"句柄无效,请确认主程序是否启动\n监听模块将自动卸载", L"错误", 0);
             DWORD hookPoint = GetWechatWinAdd() + dlloffset;
             HANDLE wx_handle = OpenProcess(PROCESS_ALL_ACCESS, NULL, GetCurrentProcessId());
             if (WriteProcessMemory(wx_handle, (LPVOID)hookPoint, backupCode, HOOK_LEN, NULL) == 0) {
                 MessageBox(NULL, L"内存写入失败", L"错误", 0);
                 return;
             }
+            MessageBox(NULL, L"句柄无效,请确认主程序是否启动\n监听模块自动卸载", L"错误", 0);
         }
 }

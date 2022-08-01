@@ -8,10 +8,10 @@
 using namespace std;
 
 #define HOOK_LEN 5
+#define ReceiveMessageHookOffset 0x550F4C
 VOID SendCallbackMsg(LPVOID msg);
 
 BYTE backupCode[HOOK_LEN] { 0 };
-DWORD dlloffset = 0x0;
 VOID MsgForward(DWORD msg)
 {
     try {
@@ -85,8 +85,8 @@ VOID __declspec(naked) MsgProcess()
 
     MsgForward(cEax);
 
-    retCallAddNext = GetWechatWinAdd() + 0x4C4F65;
-    retCallAdd = GetWechatWinAdd() + 0x4C0CE0;
+    retCallAddNext = GetWechatWinAdd() + ReceiveMessageHookOffset + 0x5;
+    retCallAdd = GetWechatWinAdd() + 0xA96350;
 
     __asm {
         mov  eax, cEax
@@ -105,11 +105,10 @@ VOID __declspec(naked) MsgProcess()
     }
 }
 
-VOID HookMessageCall(DWORD offset, LPVOID func)
+VOID HookMessageCall(LPVOID func)
 {
-    dlloffset = offset;
     //0x37CD13
-    DWORD hookPoint = GetWechatWinAdd() + offset;
+    DWORD hookPoint = GetWechatWinAdd() + ReceiveMessageHookOffset;
     BYTE jmpCode[HOOK_LEN] = { 0 };
     jmpCode[0] = 0xE9;
     *(DWORD*)&jmpCode[1] = (DWORD)func - hookPoint - HOOK_LEN;
@@ -142,7 +141,7 @@ VOID SendCallbackMsg(LPVOID msg) {// 接收消息进程名
             delete [] s;
         }
         else {
-            DWORD hookPoint = GetWechatWinAdd() + dlloffset;
+            DWORD hookPoint = GetWechatWinAdd() + ReceiveMessageHookOffset;
             HANDLE wx_handle = OpenProcess(PROCESS_ALL_ACCESS, NULL, GetCurrentProcessId());
             if (WriteProcessMemory(wx_handle, (LPVOID)hookPoint, backupCode, HOOK_LEN, NULL) == 0) {
                 MessageBox(NULL, L"内存写入失败", L"错误", 0);

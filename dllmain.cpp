@@ -9,7 +9,6 @@
 #include <string>
 #include <iostream>
 
-#define offset 0x4C4F60
 using namespace std;
 
 
@@ -37,7 +36,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
 VOID Hook(HMODULE hModule)
 {
-	HookMessageCall(offset, MsgProcess);
+	HookMessageCall(MsgProcess);
 	//MessageBox(NULL, L"已HOOK", L"提示", 0);
 }
 
@@ -57,7 +56,7 @@ INT_PTR CALLBACK DialogProc(
 		break;
 	case WM_COMMAND:
 		if (wParam == HOOK) {
-			HookMessageCall(offset, MsgProcess);
+			HookMessageCall(MsgProcess);
 			//MessageBox(hwndDlg, L"已HOOK", L"提示", 0);
 		}
 		break;

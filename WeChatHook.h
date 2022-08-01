@@ -1,4 +1,4 @@
 ﻿#include "pch.h"
 
-VOID HookMessageCall(DWORD offset, LPVOID func);
+VOID HookMessageCall(LPVOID func);
 VOID MsgProcess();

@@ -103,8 +103,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 3,6,0,18
- PRODUCTVERSION 3,6,0,18
+ FILEVERSION 3,7,0,30
+ PRODUCTVERSION 3,7,0,30
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -120,12 +120,12 @@ BEGIN
         BLOCK "080404b0"
         BEGIN
             VALUE "FileDescription", "https://github.com/modcrafts/WeChatHook"
-            VALUE "FileVersion", "3.6.0.18"
+            VALUE "FileVersion", "3.7.0.30"
             VALUE "InternalName", "WeChatHo.dll"
             VALUE "LegalCopyright", "Copyright (C) 2022"
             VALUE "OriginalFilename", "WeChatHo.dll"
             VALUE "ProductName", "н╒пе Hook дё©И"
-            VALUE "ProductVersion", "3.6.0.18"
+            VALUE "ProductVersion", "3.7.0.30"
         END
     END
     BLOCK "VarFileInfo"
